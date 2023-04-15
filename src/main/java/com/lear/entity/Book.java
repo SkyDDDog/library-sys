@@ -1,5 +1,7 @@
 package com.lear.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.lear.entity.base.DataEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -14,12 +16,18 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class Book extends DataEntity<Book> {
 
+    @TableField(exist = false)
+    private String id;
+    // 书号
+    private String isbn;
+    // 作者
+    private String author;
     // 书名
     private String name;
     // 种类
     private String type;
     // 概要
-    private String abs;
+    private String summarization;
 
 
 }
