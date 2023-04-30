@@ -1,0 +1,46 @@
+server:
+  port: 1145
+apiPath: api
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/library?serverTimezone=GMT%2b8
+    username: root
+    password: 9738faq
+  mail:
+    host: smtp.qq.com
+    port: 465
+    username: lear_yd@qq.com
+    password: kmsqktgstdycbjgb
+    default-encoding: UTF-8
+    properties:
+      mail:
+        smtp:
+          ssl:
+            enable: true
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher # 解决springboot和swagger2版本冲突
+      
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+
+mybatis-plus:
+  configuration:
+    #    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
+    map-underscore-to-camel-case: true
+  global-config:
+    db-config:
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+
+jwt:
+  secret: "DatabasePractice"
+  token-head: "Bearer "
+  header-name: "Authorization"
+  access-expiration: 3600
+  roles-expiration: 300
+  refresh-expiration: 604800

@@ -18,16 +18,12 @@ public class Book extends DataEntity<Book> {
 
     @TableField(exist = false)
     private String id;
-    // 书号
-    private String isbn;
     // 作者
     private String author;
     // 书名
     private String name;
     // 种类
     private String type;
-    // 概要
-    private String summarization;
 
 
 }
