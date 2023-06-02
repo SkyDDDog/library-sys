@@ -82,6 +82,14 @@ public class BaseResult implements Serializable {
         return this;
     }
 
+    public BaseResult fail() {
+        int msgCode = -10000;
+        this.msgCode = msgCode;
+        this.errMsg = MsgCodeUtil.getErrMsg(msgCode);
+        log.error("接口报错. 错误码：{} 错误信息：{}", this.msgCode, this.errMsg);
+        return this;
+    }
+
     public BaseResult fail(int msgCode) {
         this.msgCode = msgCode;
         this.errMsg = MsgCodeUtil.getErrMsg(msgCode);

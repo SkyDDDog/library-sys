@@ -24,7 +24,7 @@ public abstract class DataEntity<T>  extends BaseEntity<T> {
             value = "创建日期",
             example = "2018-09-29 11:26:20"
     )
-    protected Date createDate;
+    protected Date createdDate;
     @ApiModelProperty(
             value = "更新日期",
             example = "2018-09-29 11:26:20"
@@ -50,7 +50,7 @@ public abstract class DataEntity<T>  extends BaseEntity<T> {
             this.setId(IdWorker.getId(this)+"");
         }
         this.updateDate = new Date();
-        this.createDate = this.updateDate;
+        this.createdDate = this.updateDate;
     }
 
     @Override
@@ -71,12 +71,12 @@ public abstract class DataEntity<T>  extends BaseEntity<T> {
             pattern = "yyyy-MM-dd HH:mm:ss",
             timezone = "GMT+8"
     )
-    public Date getCreateDate() {
-        return this.createDate;
+    public Date getCreatedDate() {
+        return this.createdDate;
     }
 
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
     }
 
     @JsonFormat(

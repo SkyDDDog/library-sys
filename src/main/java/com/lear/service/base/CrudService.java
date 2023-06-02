@@ -17,6 +17,9 @@ public abstract class CrudService<M extends BaseMapper<T>,T extends DataEntity<T
     @Autowired
     protected M mapper;
 
+    private final int defaultPageSize = 10;
+    private final int defaultPageNum = 0;
+
     public CrudService() {
     }
 
@@ -32,29 +35,50 @@ public abstract class CrudService<M extends BaseMapper<T>,T extends DataEntity<T
     }
 
     public IPage<T> findListPage(int pageNum, int pageSize, QueryWrapper<T> wrapper) {
+        if (wrapper==null) {
+            wrapper = new QueryWrapper<T>();
+        }
         return this.findListPage(new Page<>(pageNum, pageSize), wrapper);
     }
 
     public IPage<T> findAllListPage(int pageNum, int pageSize, QueryWrapper<T> wrapper) {
+        if (wrapper==null) {
+            wrapper = new QueryWrapper<T>();
+        }
         return this.findAllListPage(new Page<>(pageNum, pageSize), wrapper);
     }
 
     public IPage<T> findListPage(Page<T> page, QueryWrapper<T> wrapper) {
+        if (wrapper==null) {
+            wrapper = new QueryWrapper<T>();
+        }
+        if (page==null) {
+            page = new Page<T>(defaultPageNum, defaultPageSize);
+        }
         wrapper.eq("del_flag", BaseEntity.DEL_FLAG_NORMAL);
         return mapper.selectPage(page, wrapper);
     }
 
     public IPage<T> findAllListPage(Page<T> page, QueryWrapper<T> wrapper) {
+        if (wrapper==null) {
+            wrapper = new QueryWrapper<T>();
+        }
         return mapper.selectPage(page, wrapper);
     }
 
 
     public List<T> findList(QueryWrapper<T> wrapper) {
+        if (wrapper==null) {
+            wrapper = new QueryWrapper<T>();
+        }
         wrapper.eq("del_flag", BaseEntity.DEL_FLAG_NORMAL);
         return this.mapper.selectList(wrapper);
     }
 
     public List<T> findAllList(QueryWrapper<T> wrapper) {
+        if (wrapper==null) {
+            wrapper = new QueryWrapper<T>();
+        }
         return this.mapper.selectList(wrapper);
     }
 

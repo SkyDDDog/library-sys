@@ -16,8 +16,8 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class Book extends DataEntity<Book> {
 
-    @TableField(exist = false)
-    private String id;
+//    @TableField(exist = false)
+//    private String id;
     // 作者
     private String author;
     // 书名
