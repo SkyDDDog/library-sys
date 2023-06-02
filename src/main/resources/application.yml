@@ -7,17 +7,6 @@ spring:
     url: jdbc:mysql://localhost:3306/library?serverTimezone=GMT%2b8
     username: root
     password: 9738faq
-  mail:
-    host: smtp.qq.com
-    port: 465
-    username: lear_yd@qq.com
-    password: kmsqktgstdycbjgb
-    default-encoding: UTF-8
-    properties:
-      mail:
-        smtp:
-          ssl:
-            enable: true
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher # 解决springboot和swagger2版本冲突
