@@ -9,6 +9,6 @@ import org.apache.ibatis.annotations.Mapper;
  * @author 天狗
  */
 @Mapper
-public interface ColllectionMapper extends BaseMapper<Collection> {
+public interface CollectionMapper extends BaseMapper<Collection> {
 
 }

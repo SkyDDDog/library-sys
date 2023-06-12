@@ -1,12 +1,16 @@
 server:
-  port: 1145
+  port: 12345
 apiPath: api
 spring:
   datasource:
+    host: mysql
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/library?serverTimezone=GMT%2b8
+#    url: jdbc:mysql://localhost:3306/library?serverTimezone=GMT%2b8
+#    username: root
+#    password: 9738faq
+    url: jdbc:mysql://${spring.datasource.host}:3306/library?serverTimezone=GMT%2b8
     username: root
-    password: 9738faq
+    password: 123456
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher # 解决springboot和swagger2版本冲突

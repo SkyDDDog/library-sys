@@ -1,5 +1,6 @@
 package com.lear.entity;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.lear.entity.base.DataEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
