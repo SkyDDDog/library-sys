@@ -1,0 +1,35 @@
+version: '3'
+
+services:
+  mysql:
+    image: mysql:5.7
+    environment:
+      TZ: Asia/Shanghai
+      MYSQL_ROOT_PASSWORD: 123456
+      MYSQL_ROOT_HOST: '%'
+    ports:
+      - "13306:3306"
+    volumes:
+      - ./pkg/config/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+      - ./pkg/data/mysql/:/var/lib/mysql/
+      - ./pkg/data/init/:/docker-entrypoint-initdb.d/
+      - ./pkg/log/mysql/:/var/log/mysql/
+    command: [
+        '--skip-name-resolve',
+        '--character-set-server=utf8mb4',
+        '--collation-server=utf8mb4_unicode_ci'
+    ]
+    restart: always
+  spring:
+    build:
+      context: java/
+      dockerfile: Dockerfile
+    environment:
+      TZ: Asia/Shanghai
+    ports:
+      - "12345:12345"
+    volumes:
+      - ./pkg/log/springboot/:/log/
+    depends_on:
+      - mysql
+    restart: always
