@@ -25,6 +25,8 @@ public class LentInfoService extends CrudService<LentInfoMapper, LentInfo> {
 
     @Autowired
     private BookService bookService;
+    @Autowired
+    private LibraryService libraryService;
 
     public int borrowBook(String userId, String bookId) {
         QueryWrapper<LentInfo> wrapper = new QueryWrapper<>();
@@ -32,7 +34,16 @@ public class LentInfoService extends CrudService<LentInfoMapper, LentInfo> {
                 .eq("entity_id", bookId)
                 .isNull("returned_at");
         List<LentInfo> list = this.findList(wrapper);
+        // 是否有未归还的记录
         if (list.size()>0) {
+            return 0;
+        }
+        // 书本是否借出
+        if (libraryService.isLent(bookId)) {
+            return 0;
+        }
+        // 判断修改借出状态是否成功
+        if (libraryService.bookStateChange(bookId)<1) {
             return 0;
         }
         LentInfo lentInfo = new LentInfo();
@@ -50,6 +61,10 @@ public class LentInfoService extends CrudService<LentInfoMapper, LentInfo> {
                 .isNull("returned_at");
         List<LentInfo> list = this.findList(wrapper);
         if (list.size()<1) {
+            return 0;
+        }
+        // 判断修改借出状态是否成功
+        if (libraryService.bookStateChange(bookId)<1) {
             return 0;
         }
         LentInfo lentInfo = list.get(0);

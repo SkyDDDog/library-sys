@@ -22,6 +22,8 @@ public class BookService extends CrudService<BookMapper, Book> {
     private CommentService commentService;
     @Autowired
     private CollectionService collectionService;
+    @Autowired
+    private LibraryService libraryService;
 
     public List<Book> searchBook(String key) {
         QueryWrapper<Book> wrapper = new QueryWrapper<>();
@@ -48,7 +50,7 @@ public class BookService extends CrudService<BookMapper, Book> {
         BookVO bookVO = new BookVO();
         BeanUtils.copyProperties(book, bookVO);
         bookVO.setBookId(book.getId());
-        bookVO.setQuantity(new Random().nextInt(10));
+        bookVO.setQuantity(libraryService.getBookCount(book.getId()));
         bookVO.setRating(commentService.getRate(book.getId())==null?0.0:commentService.getRate(book.getId()));
         if (userId!=null) {
             bookVO.setFavorite(collectionService.isCollected(userId, book.getId()));

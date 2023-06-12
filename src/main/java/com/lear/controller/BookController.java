@@ -124,7 +124,8 @@ public class BookController {
         if (bindingResult.hasErrors()) {
             return (CommonResult) result.failIllegalArgument(bindingResult.getFieldErrors()).end();
         }
-        if (0 < lentService.borrowBook(req.getUserId(), req.getBookId())) {
+
+        if (0 < lentService.borrowBook(req.getUserId(), req.getEntityId())) {
             result.success();
         } else {
             result.fail();
@@ -141,7 +142,7 @@ public class BookController {
         if (bindingResult.hasErrors()) {
             return (CommonResult) result.failIllegalArgument(bindingResult.getFieldErrors()).end();
         }
-        if (0 < lentService.returnBook(req.getUserId(), req.getBookId())) {
+        if (0 < lentService.returnBook(req.getUserId(), req.getEntityId())) {
             result.success();
         } else {
             result.fail();
