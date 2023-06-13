@@ -11,7 +11,7 @@ import org.apache.ibatis.annotations.Select;
 @Mapper
 public interface LibraryMapper extends BaseMapper<Library> {
 
-    @Select("select COUNT(*) from `library` where book_id = #{bookId}")
+    @Select("select COUNT(*) from `library` where book_id = #{bookId} and lent_flag = 0")
     public Integer getBookCount(String bookId);
 
 }

@@ -1,13 +1,12 @@
 package com.lear.controller;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.lear.common.CommonResult;
 import com.lear.entity.Book;
-import com.lear.entity.dto.BookUserDTO;
-import com.lear.entity.dto.UserRegisterDTO;
-import com.lear.entity.vo.BookVO;
+import com.lear.entity.dto.BookBorrowDTO;
+import com.lear.entity.dto.BookReturnDTO;
 import com.lear.service.BookService;
 import com.lear.service.LentInfoService;
+import com.lear.service.LibraryService;
 import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +31,8 @@ public class BookController {
     private BookService bookService;
     @Autowired
     private LentInfoService lentService;
+    @Autowired
+    private LibraryService libraryService;
 
     @ApiOperation(value = "获取所有书籍")
     @ApiImplicitParams({
@@ -118,15 +119,15 @@ public class BookController {
 
     @ApiOperation(value = "借阅书籍")
     @RequestMapping(value = "borrow", method = RequestMethod.POST)
-    public CommonResult borrowBook(@Validated @RequestBody @ApiParam("借阅dto") BookUserDTO req,
+    public CommonResult borrowBook(@Validated @RequestBody @ApiParam("借阅dto") BookBorrowDTO req,
                                    BindingResult bindingResult) {
         CommonResult result = new CommonResult().init();
         if (bindingResult.hasErrors()) {
             return (CommonResult) result.failIllegalArgument(bindingResult.getFieldErrors()).end();
         }
-
-        if (0 < lentService.borrowBook(req.getUserId(), req.getEntityId())) {
-            result.success();
+        String entityId = libraryService.getEntityId(req.getBookId());
+        if (0 < lentService.borrowBook(req.getUserId(), entityId)) {
+            result.success("entity_id", entityId);
         } else {
             result.fail();
         }
@@ -136,7 +137,7 @@ public class BookController {
 
     @ApiOperation(value = "归还书籍")
     @RequestMapping(value = "return", method = RequestMethod.POST)
-    public CommonResult returnBook(@Validated @RequestBody @ApiParam("归还dto") BookUserDTO req,
+    public CommonResult returnBook(@Validated @RequestBody @ApiParam("归还dto") BookReturnDTO req,
                                    BindingResult bindingResult) {
         CommonResult result = new CommonResult().init();
         if (bindingResult.hasErrors()) {

@@ -89,8 +89,10 @@ public class LentInfoService extends CrudService<LentInfoMapper, LentInfo> {
     public BorrowVO buildBorrowVO(LentInfo lentInfo) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         BorrowVO vo = new BorrowVO();
-        Book book = bookService.get(lentInfo.getEntityId());
-        vo.setId(book.getId())
+        String bookId = libraryService.getBookId(lentInfo.getEntityId());
+        Book book = bookService.get(bookId);
+        vo.setBookId(bookId)
+                .setEntityId(lentInfo.getEntityId())
                 .setName(book.getName())
                 .setIsReturn(lentInfo.getReturnedAt() != null)
                 .setReturnTime(lentInfo.getReturnedAt() != null ? sdf.format(lentInfo.getReturnedAt()) : null);

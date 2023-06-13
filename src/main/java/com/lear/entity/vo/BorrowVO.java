@@ -11,7 +11,8 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class BorrowVO {
 
-    private String id;
+    private String bookId;
+    private String entityId;
     private String name;
     private Boolean isReturn;
     private String returnTime;
