@@ -52,6 +52,41 @@ public class BookController {
         return (CommonResult) result.end();
     }
 
+    @RequestMapping(value = "{bookId}", method = RequestMethod.POST)
+    public CommonResult updateBook(@PathVariable String bookId, @RequestBody Book book) {
+        CommonResult result = new CommonResult().init();
+        book.setId(bookId);
+        if (0 < bookService.save(book)) {
+            result.success();
+        }
+
+        return (CommonResult) result.end();
+    }
+
+    @ApiOperation(value = "删除书籍")
+    @ApiImplicitParams({
+            @ApiImplicitParam(
+                    name = "bookId",
+                    value = "书籍id",
+                    required = true,
+                    dataType = "String",
+                    paramType = "path"
+            )
+    })
+    @RequestMapping(value = "{bookId}", method = RequestMethod.DELETE)
+    public CommonResult deleteBook(@PathVariable String bookId) {
+        CommonResult result = new CommonResult().init();
+        Book book = bookService.get(bookId);
+        if (book==null) {
+            return (CommonResult) result.failCustom("不存在该书本").end();
+        }
+        if (0 < bookService.delete(book) &&  0 < libraryService.deleteEntity(bookId)) {
+            result.success();
+        }
+
+        return (CommonResult) result.end();
+    }
+
     @ApiOperation(value = "添加书籍")
     @RequestMapping(value = "", method = RequestMethod.POST)
     public CommonResult createBook(@RequestBody Book book) {

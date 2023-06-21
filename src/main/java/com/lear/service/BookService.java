@@ -38,6 +38,7 @@ public class BookService extends CrudService<BookMapper, Book> {
         ArrayList<BookVO> result = new ArrayList<>();
         for (Book book : books) {
             BookVO bookVO = this.buildBookVO(book, userId);
+
             result.add(bookVO);
         }
         return result;
@@ -52,13 +53,12 @@ public class BookService extends CrudService<BookMapper, Book> {
         bookVO.setBookId(book.getId());
         bookVO.setQuantity(libraryService.getBookCount(book.getId()));
         bookVO.setRating(commentService.getRate(book.getId())==null?0.0:commentService.getRate(book.getId()));
+        bookVO.setCollectNum(collectionService.getCollectCount(book.getId()));
         if (userId!=null) {
             bookVO.setFavorite(collectionService.isCollected(userId, book.getId()));
         }
         return bookVO;
     }
-
-
 
 
 }

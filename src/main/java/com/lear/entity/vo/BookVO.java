@@ -17,5 +17,6 @@ public class BookVO {
     private Integer quantity;
     private Double rating;
     private Boolean favorite;
+    private Integer collectNum;
 
 }

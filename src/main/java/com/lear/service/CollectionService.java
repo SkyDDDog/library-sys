@@ -55,6 +55,12 @@ public class CollectionService extends CrudService<CollectionMapper, Collection>
         return this.findList(wrapper);
     }
 
+    public int getCollectCount(String bookId) {
+        QueryWrapper<Collection> wrapper = new QueryWrapper<>();
+        wrapper.eq("book_id", bookId);
+        return this.findList(wrapper).size();
+    }
+
     public Boolean isCollected(String userId, String bookId) {
         QueryWrapper<Collection> wrapper = new QueryWrapper<>();
         wrapper.eq("user_id", userId)

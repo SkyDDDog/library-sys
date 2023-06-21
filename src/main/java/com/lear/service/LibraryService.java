@@ -55,5 +55,15 @@ public class LibraryService extends CrudService<LibraryMapper, Library> {
         return list.get(random.nextInt(list.size())).getId();
     }
 
+    public int deleteEntity(String bookId) {
+        QueryWrapper<Library> wrapper = new QueryWrapper<>();
+        wrapper.eq("book_id", bookId);
+        List<Library> list = this.findList(wrapper);
+        int cnt = 0;
+        for (Library library : list) {
+            cnt += this.delete(library);
+        }
+        return cnt;
+    }
 
 }
